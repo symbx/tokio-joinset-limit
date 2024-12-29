@@ -1,0 +1,10 @@
+[package]
+name = "tokio-joinset-limit"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version="1.42", default-features=false, features=["rt"] }
+
+[dev-dependencies]
+tokio = { version="1.42", default-features=false, features=["rt", "macros", "time"] }
