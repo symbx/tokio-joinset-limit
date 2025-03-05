@@ -21,6 +21,18 @@ impl<O: Send + 'static> JoinSetLimit<O> {
         }
     }
 
+    /// Create a new JoinSetLimit
+    /// ### Arguments
+    /// * `limit` - The maximum number of tasks that can be running at once
+    /// * `capacity` - Queue capacity
+    pub fn with_capacity(limit: usize, capacity: usize) -> Self {
+        Self {
+            set: JoinSet::new(),
+            queue: VecDeque::with_capacity(capacity),
+            limit,
+        }
+    }
+
     /// Add a task to the JoinSetLimit
     /// Spawn it if there are less than the limit, otherwise add it to the queue
     /// ### Arguments
@@ -42,6 +54,13 @@ impl<O: Send + 'static> JoinSetLimit<O> {
             }
         }
         value
+    }
+
+    /// Reserve capacity for the queue
+    /// ### Arguments
+    /// * `capacity` - The capacity to reserve
+    pub fn reserve(&mut self, capacity: usize) {
+        self.queue.reserve(capacity);
     }
 }
 
