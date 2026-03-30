@@ -67,6 +67,21 @@ impl<O: Send + 'static> JoinSetLimit<O> {
     pub async fn shutdown(mut self) {
         self.set.shutdown().await;
     }
+
+    /// Return whether queue is empty
+    pub fn is_empty(&self) -> bool {
+        self.set.is_empty() && self.queue.is_empty()
+    }
+
+    /// Return amount of tasks processing in set
+    pub fn in_progress(&self) -> usize {
+        self.set.len()
+    }
+
+    /// Return amount of tasks waiting in backlog
+    pub fn in_backlog(&self) -> usize {
+        self.queue.len()
+    }
 }
 
 #[cfg(test)]
