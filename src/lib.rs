@@ -62,6 +62,11 @@ impl<O: Send + 'static> JoinSetLimit<O> {
     pub fn reserve(&mut self, capacity: usize) {
         self.queue.reserve(capacity);
     }
+
+    /// Abort all tasks
+    pub async fn shutdown(mut self) {
+        self.set.shutdown().await;
+    }
 }
 
 #[cfg(test)]
